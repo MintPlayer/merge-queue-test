@@ -1,0 +1,27 @@
+name: build-any
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+      
+jobs:
+  build:
+  
+    name: build-any
+    runs-on: ubuntu-latest
+    
+    permissions: 
+      contents: read
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    #- name: Build
+    #  run: npm run build -- --configuration=production
